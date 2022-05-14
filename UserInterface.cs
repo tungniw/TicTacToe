@@ -25,91 +25,93 @@ namespace TicTacToe
             string player1Name = Console.ReadLine();
             Console.WriteLine("Player 2 you will be X... What is your name?");
             string player2Name = Console.ReadLine();
-            CreateBoard();
-            //Restart
+            
 
-
-
+            
             {
-                while (isRunning)
+
                 {
-                    input = int.Parse(Console.ReadLine());
-
-                    if (pos[input] != "X" && pos[input] != "O")
+                    while (isRunning)
                     {
-                        if (playersTurn % 2 == 0)
+                        
+                        CreateBoard();
+                        input = int.Parse(Console.ReadLine());
+
+                        if (pos[input] != "X" && pos[input] != "O")
                         {
-                            // string input = Console.ReadLine();
-                            // input = int.Parse(Console.ReadLine());
-                            PlaceChoice(input.ToString(), "O");
-                            Console.Clear();
-                            CreateBoard();
-                            playersTurn++;
+                            if (playersTurn % 2 == 0)
+                            {
+                                PlaceChoice(input.ToString(), "O");
+                                CreateBoard();
+                                Console.Clear();
+                                playersTurn++;
+                            }
+                            else if (playersTurn % 2 != 0)
+                            {
+                                PlaceChoice(input.ToString(), "X");
+                                CreateBoard();
+                                Console.Clear();
+                                playersTurn++;
+                            }
+
                         }
-                        else if (playersTurn % 2 != 0)
+
+                        else
                         {
-                            // input = int.Parse(Console.ReadLine());
-                            // string input = Console.ReadLine();
-                            PlaceChoice(input.ToString(), "X");
+                            Console.WriteLine("Sorry that spot is already taken.");
+                        }
+
+                        if (CheckWin() == 1)
+                        {
+                            Console.WriteLine($"{player1Name} wins!");
+                            Console.WriteLine("press any button to play again");
+                            Console.ReadKey();
+                            ClearBoard();
                             Console.Clear();
-                            CreateBoard();
-                            playersTurn++;
+
+                        }
+                        else if (CheckWin() == 2)
+                        {
+                            // Console.Clear();
+                            Console.WriteLine($"{player2Name} wins!");
+                            Console.WriteLine("press any button to play again");
+                            Console.WriteLine();
+                            Console.ReadKey();
+                            ClearBoard();
+                            Console.Clear();
+
+                        }
+                        else if (CheckWin() == 5)
+                        {
+                            Console.WriteLine("its a draw");
+                            Console.WriteLine("press any button to play again");
+                            ClearBoard();
+                            Console.ReadKey();
+
                         }
 
                     }
-
-                    else
-                    {
-                        Console.WriteLine("Sorry that spot is already taken.");
-                    }
-
-
-                    // Console.WriteLine(CheckWin());
-                    // string input = Console.ReadLine();
-                    // PlaceChoice(input);
-                    // PlaceChoice2(input);
-                    // CreateBoard();
-                    if (CheckWin() == 1)
-                    {
-                        // Console.Clear();
-                        Console.WriteLine($"{player1Name} wins!");
-                        Console.WriteLine("press any button to play again");
-                        Console.ReadKey();
-                        Run();
-
-                    }
-                    else if (CheckWin() == 2)
-                    {
-                        // Console.Clear();
-                        Console.WriteLine($"{player2Name} wins!");
-                        Console.WriteLine("press any button to play again");
-                        Console.ReadKey();
-                        Run();
-
-                    }
-                    else if (CheckWin() == 5)
-                    {
-                        Console.WriteLine("its a draw");
-                        Console.WriteLine("press any button to play again");
-                        Console.ReadKey();
-                        Run();
-
-                    }
-
+                    flag = CheckWin();
                 }
-                flag = CheckWin();
             }
         }
+
 
         string[] pos = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
         public void CreateBoard()
         {
+            
             Console.WriteLine("     {0}     |       {1}     |       {2}     ", pos[1], pos[2], pos[3]);
             Console.WriteLine("=======================================");
             Console.WriteLine("     {0}     |       {1}     |       {2}     ", pos[4], pos[5], pos[6]);
             Console.WriteLine("=======================================");
             Console.WriteLine("     {0}     |       {1}     |       {2}     ", pos[7], pos[8], pos[9]);
+        }
+
+        public void ClearBoard()
+        {
+            pos = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         }
 
         public string PlaceChoice(string x, string y)
@@ -157,52 +159,6 @@ namespace TicTacToe
                     break;
             }
         }
-
-        // public string PlaceChoice2(string y)
-        // {
-        //     switch (y)
-        //     {
-        //         case "1":
-        //             pos[1] = "X";
-        //             return pos[1];
-        //             break;
-        //         case "2":
-        //             pos[2] = "X";
-        //             return pos[2];
-        //             break;
-        //         case "3":
-        //             pos[3] = "X";
-        //             return pos[3];
-        //             break;
-        //         case "4":
-        //             pos[4] = "X";
-        //             return pos[4];
-        //             break;
-        //         case "5":
-        //             pos[5] = "X";
-        //             return pos[5];
-        //             break;
-        //         case "6":
-        //             pos[6] = "X";
-        //             return pos[6];
-        //             break;
-        //         case "7":
-        //             pos[7] = "X";
-        //             return pos[7];
-        //             break;
-        //         case "8":
-        //             pos[8] = "X";
-        //             return pos[8];
-        //             break;
-        //         case "9":
-        //             pos[9] = "X";
-        //             return pos[9];
-        //             break;
-        //         default:
-        //             return "We all lose.";
-        //             break;
-        //     }
-        // }
 
         public int CheckWin() // Win checker method ================================================
         {
